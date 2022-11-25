@@ -44,7 +44,26 @@ public class ListeSoirees extends AppCompatActivity {
                 public void whenWSConnexionIsTerminated(Object result) {
 
                     if((boolean) result == true){
-                        Toast.makeText(ListeSoirees.this,"déconnexion en cours",Toast.LENGTH_LONG).show();
+                        Toast.makeText(ListeSoirees.this,"déconnexion effectuée. A bientôt",Toast.LENGTH_LONG).show();
+                        finish();
+                    }else{
+                        Toast.makeText(ListeSoirees.this,"déconnexion échouée",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+        });
+
+
+        findViewById(R.id.buttonSupprCompteSoirees).setOnClickListener((View views)->{
+            DaoMembre.getInstance().supprMembre(new DelegateAsyncTask() {
+                @Override
+                public void whenWSConnexionIsTerminated(Object result) {
+                    if((boolean) result == true){
+                        Toast.makeText(ListeSoirees.this,"Supression du compte en cours...",Toast.LENGTH_LONG).show();
+                        finish();
+                    }else{
+                        Toast.makeText(ListeSoirees.this,"Supression du compte impossible...",Toast.LENGTH_LONG).show();
                     }
                 }
             });

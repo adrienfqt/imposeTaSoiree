@@ -159,4 +159,25 @@ public class DaoMembre {
         }
     }
 
+    public void supprMembre(DelegateAsyncTask delegate){
+        String url = "requete=supprimerCompte";
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetoursupprMembre(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+    private void traiterRetoursupprMembre(String s,DelegateAsyncTask delegate){
+        try {
+            JSONObject jo = new JSONObject(s);
+            delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
