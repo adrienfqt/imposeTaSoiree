@@ -1,5 +1,6 @@
 package com.afouquet.imposeTaSoiree.beans;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Soiree {
@@ -57,6 +58,7 @@ public class Soiree {
 
     @Override
     public String toString() {
-        return this.libCourt +" ("+this.dateDebut+")";
+        SimpleDateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
+        return this.libCourt +" ("+sdff.format(dateDebut)+")";
     }
 }

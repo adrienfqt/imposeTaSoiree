@@ -4,11 +4,15 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.afouquet.imposeTaSoiree.beans.Soiree;
+import com.afouquet.imposeTaSoiree.daos.DaoMembre;
 import com.afouquet.imposeTaSoiree.daos.DaoSoiree;
 import com.afouquet.imposeTaSoiree.daos.DelegateAsyncTask;
 
@@ -34,6 +38,17 @@ public class ListeSoirees extends AppCompatActivity {
 
             }
         });
+        findViewById(R.id.buttonDécoListSoiree).setOnClickListener((View view)->{
+            DaoMembre.getInstance().deconnectMembre( new DelegateAsyncTask() {
+                @Override
+                public void whenWSConnexionIsTerminated(Object result) {
 
+                    if((boolean) result == true){
+                        Toast.makeText(ListeSoirees.this,"déconnexion en cours",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+        });
     }
 }

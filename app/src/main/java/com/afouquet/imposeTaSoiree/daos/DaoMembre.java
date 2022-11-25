@@ -123,7 +123,6 @@ public class DaoMembre {
         wsConnexionHTTPS.execute(url);
     }
 
-
     private void traiterRetourGetMembreByLogin(String s,DelegateAsyncTask delegate){
         Membre m = null;
         try {
@@ -139,9 +138,25 @@ public class DaoMembre {
         } catch (JSONException | ParseException e) {
             e.printStackTrace();
         }
+    }
+    public void deconnectMembre(DelegateAsyncTask delegate){
+        String url = "requete=deconnexion";
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetourdeconnectMembre(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
 
-
-
+    private void traiterRetourdeconnectMembre(String s, DelegateAsyncTask delegate){
+        try {
+            JSONObject jo = new JSONObject(s);
+            delegate.whenWSConnexionIsTerminated(jo.getBoolean("success"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 }
