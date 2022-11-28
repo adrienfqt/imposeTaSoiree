@@ -17,6 +17,7 @@ import com.afouquet.imposeTaSoiree.daos.DaoMembre;
 import com.afouquet.imposeTaSoiree.daos.DelegateAsyncTask;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailSoiree extends AppCompatActivity {
@@ -25,6 +26,7 @@ public class DetailSoiree extends AppCompatActivity {
     SimpleDateFormat shff = new SimpleDateFormat("HH:mm");
 
     private ArrayAdapter<Membre> arrayAdapterMembre;
+    private List<Membre>lesMembresDeLaSoiree= new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,9 @@ public class DetailSoiree extends AppCompatActivity {
         Soiree s = (Soiree) this.getIntent().getSerializableExtra("laSoiree");
 
         arrayAdapterMembre = new ArrayAdapter<Membre>(this, android.R.layout.simple_list_item_1);
-        ((ListView)findViewById(R.id.lvMembresSoireeDetail)).setAdapter(arrayAdapterMembre);
+        ((ListView) findViewById(R.id.lvMembresSoireeDetail)).setAdapter(arrayAdapterMembre);
+
+
 
         //AFFICHAGE SOIREE
         ((TextView) findViewById(R.id.tvTitreDetailSoiree)).setText(s.getLibCourt());
@@ -47,12 +51,11 @@ public class DetailSoiree extends AppCompatActivity {
         DaoMembre.getInstance().getParticipantsByIdSoiree(s.getId(), new DelegateAsyncTask() {
             @Override
             public void whenWSConnexionIsTerminated(Object result) {
-                for (Membre m:((List<Membre>) result)){
-                }
+
                 if (!((List<Membre>) result).isEmpty()) {
                     arrayAdapterMembre.addAll(((List<Membre>) result));
 
-                }else{
+                } else {
                     Toast.makeText(DetailSoiree.this, "liste vide", Toast.LENGTH_LONG).show();
                 }
             }
@@ -61,8 +64,14 @@ public class DetailSoiree extends AppCompatActivity {
 
 
         //BOUTON RETOUR
-        findViewById(R.id.buttonRetourDetail).setOnClickListener((View view) ->{
-                    finish();
-                });
+        findViewById(R.id.buttonRetourDetail).setOnClickListener((View view) -> {
+            finish();
+        });
+
+        Log.d("zobi",DaoMembre.getInstance().getMembreConnected().getLogin());
+        if (s.getOrganisateur().equals(DaoMembre.getInstance().getMembreConnected().getLogin()) ) {
+            ((Button) findViewById(R.id.buttonDesinscrireDetail)).setVisibility(View.INVISIBLE);
+            findViewById(R.id.buttonInscrireDetail).setVisibility(View.INVISIBLE);
+        }
     }
 }
