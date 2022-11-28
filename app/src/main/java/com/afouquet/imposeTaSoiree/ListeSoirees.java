@@ -3,9 +3,11 @@ package com.afouquet.imposeTaSoiree;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -68,6 +70,16 @@ public class ListeSoirees extends AppCompatActivity {
                 }
             });
 
+        });
+
+        ((ListView)findViewById(R.id.listSoirees)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Soiree s = (Soiree)arrayAdapterSoiree.getItem(position);
+                Intent leIntent = new Intent(ListeSoirees.this,DetailSoiree.class);
+                leIntent.putExtra("laSoiree",s);
+                startActivity(leIntent);
+            }
         });
     }
 }

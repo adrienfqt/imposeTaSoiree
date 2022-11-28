@@ -1,9 +1,10 @@
 package com.afouquet.imposeTaSoiree.beans;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Soiree {
+public class Soiree implements Serializable {
     private String libCourt;
     private String descriptif;
     private String adresse;
