@@ -214,5 +214,97 @@ public class DaoMembre {
             e.printStackTrace();
         }
     }
+    public void isInscrit(int id,DelegateAsyncTask delegate){
+        String url = "requete=isInscrit&soiree="+id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetourisInscrit(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+    private void traiterRetourisInscrit(String s,DelegateAsyncTask delegate){
+        try {
+            JSONObject jo = new JSONObject(s);
+            delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void desinscrireSoiree(int id,DelegateAsyncTask delegate){
+        String url = "requete=desinscrire&soiree="+id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetourdesinscrireSoiree(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+    private void traiterRetourdesinscrireSoiree(String s,DelegateAsyncTask delegate){
+        try {
+            JSONObject jo = new JSONObject(s);
+            if(jo.getBoolean("success")){
+                delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
+            }else{
+                Log.d("fail desinscrire","requête désinscription échouée");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void inscrireSoiree(int id,DelegateAsyncTask delegate){
+        String url = "requete=inscrire&soiree="+id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetourInscrireSoiree(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+    private void traiterRetourInscrireSoiree(String s,DelegateAsyncTask delegate){
+        try {
+            JSONObject jo = new JSONObject(s);
+            if(jo.getBoolean("success")){
+                delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
+            }else{
+                Log.d("fail desinscrire","requête désinscription échouée");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void delSoiree(int id,DelegateAsyncTask delegate){
+        String url = "requete=delSoiree&soiree="+id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetourdelSoiree(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+    private void traiterRetourdelSoiree(String s,DelegateAsyncTask delegate){
+        try {
+            JSONObject jo = new JSONObject(s);
+            if(jo.getBoolean("success")){
+                delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
+            }else{
+                Log.d("fail desinscrire","requête désinscription échouée");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

@@ -38,8 +38,6 @@ public class DetailSoiree extends AppCompatActivity {
         arrayAdapterMembre = new ArrayAdapter<Membre>(this, android.R.layout.simple_list_item_1);
         ((ListView) findViewById(R.id.lvMembresSoireeDetail)).setAdapter(arrayAdapterMembre);
 
-
-
         //AFFICHAGE SOIREE
         ((TextView) findViewById(R.id.tvTitreDetailSoiree)).setText(s.getLibCourt());
         ((TextView) findViewById(R.id.tvDescriDetail)).setText(s.getDescriptif());
@@ -62,16 +60,93 @@ public class DetailSoiree extends AppCompatActivity {
         });
         arrayAdapterMembre.notifyDataSetChanged();
 
-
         //BOUTON RETOUR
         findViewById(R.id.buttonRetourDetail).setOnClickListener((View view) -> {
             finish();
         });
 
-        Log.d("zobi",DaoMembre.getInstance().getMembreConnected().getLogin());
-        if (s.getOrganisateur().equals(DaoMembre.getInstance().getMembreConnected().getLogin()) ) {
-            ((Button) findViewById(R.id.buttonDesinscrireDetail)).setVisibility(View.INVISIBLE);
+        //BOUTON VISIBLES OU PAS SELON PARTICIPANT / ORGANISATEUR,ETC...
+        Log.d("zobi", DaoMembre.getInstance().getMembreConnected().getLogin());
+        if (s.getOrganisateur().equals(DaoMembre.getInstance().getMembreConnected().getLogin())) {
+            findViewById(R.id.buttonDesinscrireDetail).setVisibility(View.INVISIBLE);
             findViewById(R.id.buttonInscrireDetail).setVisibility(View.INVISIBLE);
         }
+
+        DaoMembre.getInstance().isInscrit(s.getId(), new DelegateAsyncTask() {
+            @Override
+            public void whenWSConnexionIsTerminated(Object result) {
+                Log.d("inscrit", String.valueOf((boolean) result));
+                if ((boolean) result) {
+                    findViewById(R.id.buttonInscrireDetail).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.buttonSupprDetail).setVisibility(View.INVISIBLE);
+
+                } else {
+                    findViewById(R.id.buttonInscrireDetail).setVisibility(View.VISIBLE);
+                    findViewById(R.id.buttonDesinscrireDetail).setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        //Mise en place de la fonctionnalité des boutons
+
+        //Désinscription
+        findViewById(R.id.buttonDesinscrireDetail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                DaoMembre.getInstance().desinscrireSoiree(s.getId(), new DelegateAsyncTask() {
+                    @Override
+                    public void whenWSConnexionIsTerminated(Object result) {
+                        if ((boolean) result) {
+                            findViewById(R.id.buttonDesinscrireDetail).setVisibility(View.INVISIBLE);
+                            findViewById(R.id.buttonInscrireDetail).setVisibility(View.VISIBLE);
+                            arrayAdapterMembre.notifyDataSetChanged();
+                            Toast.makeText(DetailSoiree.this, "désinscription effectuée", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(DetailSoiree.this, "Erreur désinscription annulée ", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        //Inscription
+        findViewById(R.id.buttonInscrireDetail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaoMembre.getInstance().inscrireSoiree(s.getId(), new DelegateAsyncTask() {
+                    @Override
+                    public void whenWSConnexionIsTerminated(Object result) {
+                        if ((boolean) result) {
+                            findViewById(R.id.buttonInscrireDetail).setVisibility(View.INVISIBLE);
+                            findViewById(R.id.buttonDesinscrireDetail).setVisibility(View.VISIBLE);
+                            arrayAdapterMembre.notifyDataSetChanged();
+                            Toast.makeText(DetailSoiree.this, "Inscription effectuée", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(DetailSoiree.this, "Erreur Inscription annulée ", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
+        //Suppression soirée
+        findViewById(R.id.buttonSupprDetail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DaoMembre.getInstance().delSoiree(s.getId(), new DelegateAsyncTask() {
+                    @Override
+                    public void whenWSConnexionIsTerminated(Object result) {
+                        if ((boolean) result) {
+                            finish();
+                            Toast.makeText(DetailSoiree.this, "Suppression soirée effectuée", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(DetailSoiree.this, "Erreur Suppression soirée annulée ", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        });
+
     }
 }
