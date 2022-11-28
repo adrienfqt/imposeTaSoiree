@@ -57,6 +57,7 @@ public class DaoSoiree {
             JSONArray ja = jo.getJSONArray("response");
             for (int i = 0; i < ja.length(); i++) {
                 JSONObject soireeJson =ja.getJSONObject(i);
+                int id = soireeJson.getInt("id");
                 String lib = soireeJson.getString("libelleCourt");
                 String desc = soireeJson.getString("descriptif");
                 String adresse = soireeJson.getString("adresse");
@@ -65,7 +66,7 @@ public class DaoSoiree {
                 Double lat = Double.parseDouble(soireeJson.getString("latitude"));
                 Double lng = Double.parseDouble(soireeJson.getString("longitude"));
                 String login =soireeJson.getString("login");
-                Soiree ss = new Soiree(lib,desc,adresse,lat,lng,dateDeb,heureDeb,login);
+                Soiree ss = new Soiree(id,lib,desc,adresse,lat,lng,dateDeb,heureDeb,login);
                 soirees.add(ss);
                 Log.d("soirée crée",ss.toString());
                 delegate.whenWSConnexionIsTerminated(soirees.isEmpty());

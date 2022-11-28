@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.afouquet.imposeTaSoiree.beans.Membre;
+import com.afouquet.imposeTaSoiree.beans.Soiree;
 import com.afouquet.imposeTaSoiree.net.WSConnexionHTTPS;
 
 import org.json.JSONArray;
@@ -14,6 +15,9 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class DaoMembre {
@@ -178,6 +182,37 @@ public class DaoMembre {
             e.printStackTrace();
         }
 
+    }
+
+
+    public void getParticipantsByIdSoiree(int id,DelegateAsyncTask delegate){
+        String url = "requete=getLesParticipants&soiree="+id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetourgetParticipantsByIdSoiree(s,delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+    private void traiterRetourgetParticipantsByIdSoiree(String s,DelegateAsyncTask delegate){
+        List<Membre> lesMembres = new ArrayList<>();
+        try {
+            JSONObject jo = new JSONObject(s);
+            if(jo.getBoolean("success")){
+                JSONArray ja = jo.getJSONArray("response");
+                for (int i = 0; i < ja.length(); i++) {
+                    JSONObject soireeJson =ja.getJSONObject(i);
+                    Membre m = new Membre((soireeJson.getString("nom")), (soireeJson.getString("prenom")), (formatter.parse(soireeJson.getString("ddn"))), (soireeJson.getString("mail")), (soireeJson.getString("login")));
+                    lesMembres.add(m);
+
+                }
+                delegate.whenWSConnexionIsTerminated(lesMembres);
+            }
+        } catch (JSONException | ParseException e) {
+            e.printStackTrace();
+        }
     }
 
 }

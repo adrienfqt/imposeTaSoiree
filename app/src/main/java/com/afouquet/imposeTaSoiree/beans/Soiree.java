@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Soiree implements Serializable {
+    private int id;
     private String libCourt;
     private String descriptif;
     private String adresse;
@@ -14,7 +15,8 @@ public class Soiree implements Serializable {
     private Date heureDebut;
     private String organisateur;
 
-    public Soiree(String libCourt, String descriptif, String adresse, Double lat, Double lng, Date dateDebut, Date heureDebut,String organisateur) {
+    public Soiree(int id,String libCourt, String descriptif, String adresse, Double lat, Double lng, Date dateDebut, Date heureDebut,String organisateur) {
+        this.id = id;
         this.libCourt = libCourt;
         this.descriptif = descriptif;
         this.adresse = adresse;
@@ -61,5 +63,9 @@ public class Soiree implements Serializable {
     public String toString() {
         SimpleDateFormat sdff = new SimpleDateFormat("dd-MM-yyyy");
         return this.libCourt +" ("+sdff.format(dateDebut)+")";
+    }
+
+    public int getId() {
+        return id;
     }
 }
