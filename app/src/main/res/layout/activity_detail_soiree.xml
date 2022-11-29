@@ -81,20 +81,20 @@
         android:layout_width="122dp"
         android:layout_height="49dp"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginTop="28dp"
         android:text="Retour"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonInscrireDetail" />
 
     <Button
         android:id="@+id/buttonDesinscrireDetail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="148dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="32dp"
         android:text="Me désinscrire"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/buttonSupprDetail" />
 
     <TextView
         android:id="@+id/tvTitreDetailSoiree"
@@ -111,7 +111,7 @@
         android:id="@+id/buttonInscrireDetail"
         android:layout_width="138dp"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="28dp"
         android:text="M'inscrire"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.058"
@@ -123,9 +123,10 @@
         android:id="@+id/buttonSupprDetail"
         android:layout_width="149dp"
         android:layout_height="39dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="32dp"
         android:text="Supprimer"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/lvMembresSoireeDetail"
         tools:ignore="TouchTargetSizeCheck" />

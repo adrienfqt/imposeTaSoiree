@@ -24,6 +24,12 @@ public class DaoSoiree {
 
     private static DaoSoiree instance = null;
     private final List<Soiree> soirees;
+
+    public List<Soiree> getSoirees() {
+        return soirees;
+    }
+
+
     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
     SimpleDateFormat formatterHeure = new SimpleDateFormat("HH:mm", Locale.FRANCE);
 

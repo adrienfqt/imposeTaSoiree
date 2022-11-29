@@ -67,7 +67,7 @@ public class DetailSoiree extends AppCompatActivity {
 
         //BOUTON VISIBLES OU PAS SELON PARTICIPANT / ORGANISATEUR,ETC...
         Log.d("zobi", DaoMembre.getInstance().getMembreConnected().getLogin());
-        if (s.getOrganisateur().equals(DaoMembre.getInstance().getMembreConnected().getLogin())) {
+        if (s.getOrganisateur().equals(DaoMembre.getInstance().getMembreConnected().getLogin())) {//c'est ma soirée
             findViewById(R.id.buttonDesinscrireDetail).setVisibility(View.INVISIBLE);
             findViewById(R.id.buttonInscrireDetail).setVisibility(View.INVISIBLE);
         }
@@ -83,6 +83,10 @@ public class DetailSoiree extends AppCompatActivity {
                 } else {
                     findViewById(R.id.buttonInscrireDetail).setVisibility(View.VISIBLE);
                     findViewById(R.id.buttonDesinscrireDetail).setVisibility(View.INVISIBLE);
+                }
+                if (s.getOrganisateur().equals(DaoMembre.getInstance().getMembreConnected().getLogin())) {//c'est ma soirée
+
+                    findViewById(R.id.buttonSupprDetail).setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -138,8 +142,10 @@ public class DetailSoiree extends AppCompatActivity {
                     @Override
                     public void whenWSConnexionIsTerminated(Object result) {
                         if ((boolean) result) {
+                            setResult(RESULT_OK);
                             finish();
                             Toast.makeText(DetailSoiree.this, "Suppression soirée effectuée", Toast.LENGTH_LONG).show();
+
                         } else {
                             Toast.makeText(DetailSoiree.this, "Erreur Suppression soirée annulée ", Toast.LENGTH_LONG).show();
                         }

@@ -296,9 +296,8 @@ public class DaoMembre {
     private void traiterRetourdelSoiree(String s,DelegateAsyncTask delegate){
         try {
             JSONObject jo = new JSONObject(s);
-            if(jo.getBoolean("success")){
-                delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
-            }else{
+                delegate.whenWSConnexionIsTerminated(jo.getBoolean("success"));
+                if(!jo.getBoolean("success")){
                 Log.d("fail desinscrire","requête désinscription échouée");
             }
         } catch (JSONException e) {
