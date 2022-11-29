@@ -57,7 +57,7 @@ public class DaoMembre {
         WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourAddMembre(s,delegate);
+                traiterRetourAddMembre(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
@@ -66,9 +66,8 @@ public class DaoMembre {
     private void traiterRetourAddMembre(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
-            if(jo.getBoolean("response")){
+            delegate.whenWSConnexionIsTerminated(jo.getBoolean("response")==true);
 
-            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -116,26 +115,26 @@ public class DaoMembre {
 
     }
 
-    public void getMembreByLogin(String login,DelegateAsyncTask delegate){
-        String url = "requete=getMembreByLogin&login="+login;
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+    public void getMembreByLogin(String login, DelegateAsyncTask delegate) {
+        String url = "requete=getMembreByLogin&login=" + login;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourGetMembreByLogin(s,delegate);
+                traiterRetourGetMembreByLogin(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourGetMembreByLogin(String s,DelegateAsyncTask delegate){
+    private void traiterRetourGetMembreByLogin(String s, DelegateAsyncTask delegate) {
         Membre m = null;
         try {
             JSONObject jo = new JSONObject(s);
-            if(jo.getBoolean("success")){
+            if (jo.getBoolean("success")) {
                 JSONObject ja = (JSONObject) jo.get("response");
                 m = new Membre(ja.getString("nom").toString(), ja.getString("prenom").toString(), (formatter.parse(ja.getString("ddn"))), (ja.getString("mail")), (ja.getString("login")));
 
-            }else{
+            } else {
                 Log.d("request failed", "la requête a échouée");
             }
             delegate.whenWSConnexionIsTerminated(m);
@@ -143,18 +142,19 @@ public class DaoMembre {
             e.printStackTrace();
         }
     }
-    public void deconnectMembre(DelegateAsyncTask delegate){
+
+    public void deconnectMembre(DelegateAsyncTask delegate) {
         String url = "requete=deconnexion";
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourdeconnectMembre(s,delegate);
+                traiterRetourdeconnectMembre(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourdeconnectMembre(String s, DelegateAsyncTask delegate){
+    private void traiterRetourdeconnectMembre(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
             delegate.whenWSConnexionIsTerminated(jo.getBoolean("success"));
@@ -163,18 +163,18 @@ public class DaoMembre {
         }
     }
 
-    public void supprMembre(DelegateAsyncTask delegate){
+    public void supprMembre(DelegateAsyncTask delegate) {
         String url = "requete=supprimerCompte";
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetoursupprMembre(s,delegate);
+                traiterRetoursupprMembre(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetoursupprMembre(String s,DelegateAsyncTask delegate){
+    private void traiterRetoursupprMembre(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
             delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
@@ -185,25 +185,25 @@ public class DaoMembre {
     }
 
 
-    public void getParticipantsByIdSoiree(int id,DelegateAsyncTask delegate){
-        String url = "requete=getLesParticipants&soiree="+id;
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+    public void getParticipantsByIdSoiree(int id, DelegateAsyncTask delegate) {
+        String url = "requete=getLesParticipants&soiree=" + id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourgetParticipantsByIdSoiree(s,delegate);
+                traiterRetourgetParticipantsByIdSoiree(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourgetParticipantsByIdSoiree(String s,DelegateAsyncTask delegate){
+    private void traiterRetourgetParticipantsByIdSoiree(String s, DelegateAsyncTask delegate) {
         List<Membre> lesMembres = new ArrayList<>();
         try {
             JSONObject jo = new JSONObject(s);
-            if(jo.getBoolean("success")){
+            if (jo.getBoolean("success")) {
                 JSONArray ja = jo.getJSONArray("response");
                 for (int i = 0; i < ja.length(); i++) {
-                    JSONObject soireeJson =ja.getJSONObject(i);
+                    JSONObject soireeJson = ja.getJSONObject(i);
                     Membre m = new Membre((soireeJson.getString("nom")), (soireeJson.getString("prenom")), (formatter.parse(soireeJson.getString("ddn"))), (soireeJson.getString("mail")), (soireeJson.getString("login")));
                     lesMembres.add(m);
 
@@ -214,18 +214,19 @@ public class DaoMembre {
             e.printStackTrace();
         }
     }
-    public void isInscrit(int id,DelegateAsyncTask delegate){
-        String url = "requete=isInscrit&soiree="+id;
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+
+    public void isInscrit(int id, DelegateAsyncTask delegate) {
+        String url = "requete=isInscrit&soiree=" + id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourisInscrit(s,delegate);
+                traiterRetourisInscrit(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourisInscrit(String s,DelegateAsyncTask delegate){
+    private void traiterRetourisInscrit(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
             delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
@@ -234,71 +235,71 @@ public class DaoMembre {
         }
     }
 
-    public void desinscrireSoiree(int id,DelegateAsyncTask delegate){
-        String url = "requete=desinscrire&soiree="+id;
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+    public void desinscrireSoiree(int id, DelegateAsyncTask delegate) {
+        String url = "requete=desinscrire&soiree=" + id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourdesinscrireSoiree(s,delegate);
+                traiterRetourdesinscrireSoiree(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourdesinscrireSoiree(String s,DelegateAsyncTask delegate){
+    private void traiterRetourdesinscrireSoiree(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
-            if(jo.getBoolean("success")){
+            if (jo.getBoolean("success")) {
                 delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
-            }else{
-                Log.d("fail desinscrire","requête désinscription échouée");
+            } else {
+                Log.d("fail desinscrire", "requête désinscription échouée");
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void inscrireSoiree(int id,DelegateAsyncTask delegate){
-        String url = "requete=inscrire&soiree="+id;
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+    public void inscrireSoiree(int id, DelegateAsyncTask delegate) {
+        String url = "requete=inscrire&soiree=" + id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourInscrireSoiree(s,delegate);
+                traiterRetourInscrireSoiree(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourInscrireSoiree(String s,DelegateAsyncTask delegate){
+    private void traiterRetourInscrireSoiree(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
-            if(jo.getBoolean("success")){
+            if (jo.getBoolean("success")) {
                 delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
-            }else{
-                Log.d("fail desinscrire","requête désinscription échouée");
+            } else {
+                Log.d("fail desinscrire", "requête désinscription échouée");
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
 
-    public void delSoiree(int id,DelegateAsyncTask delegate){
-        String url = "requete=delSoiree&soiree="+id;
-        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS(){
+    public void delSoiree(int id, DelegateAsyncTask delegate) {
+        String url = "requete=delSoiree&soiree=" + id;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
             @Override
             protected void onPostExecute(String s) {
-                traiterRetourdelSoiree(s,delegate);
+                traiterRetourdelSoiree(s, delegate);
             }
         };
         wsConnexionHTTPS.execute(url);
     }
 
-    private void traiterRetourdelSoiree(String s,DelegateAsyncTask delegate){
+    private void traiterRetourdelSoiree(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
-                delegate.whenWSConnexionIsTerminated(jo.getBoolean("success"));
-                if(!jo.getBoolean("success")){
-                Log.d("fail desinscrire","requête désinscription échouée");
+            delegate.whenWSConnexionIsTerminated(jo.getBoolean("success"));
+            if (!jo.getBoolean("success")) {
+                Log.d("fail desinscrire", "requête désinscription échouée");
             }
         } catch (JSONException e) {
             e.printStackTrace();

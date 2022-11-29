@@ -2,9 +2,11 @@ package com.afouquet.imposeTaSoiree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afouquet.imposeTaSoiree.beans.Membre;
@@ -29,21 +31,30 @@ public class Incription extends AppCompatActivity {
         });
 
         findViewById(R.id.buttonValiderInscrire).setOnClickListener((View view)->{
-            Toast.makeText(this,"début de l'inscription",Toast.LENGTH_LONG).show();
 
-            if(findViewById(R.id.passwordUnInscrire).toString()==findViewById(R.id.passwordDeuxInscrire).toString() ){
+            Log.d("verif",((TextView) findViewById(R.id.passwordUnInscrire)).getText().toString());
+            if(((TextView) findViewById(R.id.passwordUnInscrire)).getText().toString().equals(((TextView) findViewById(R.id.passwordDeuxInscrire)).getText().toString())){
                 try {
-                    Membre m = new Membre((findViewById(R.id.nomInscrire).toString())
-                            ,findViewById(R.id.prenomInscrire).toString()
-                            ,formatter.parse(findViewById(R.id.ddnInscrire).toString())
-                            ,findViewById(R.id.mailInscrire).toString()
-                            ,findViewById(R.id.loginInscrire).toString()
-                            ,findViewById(R.id.passwordUnInscrire).toString());
+                    Membre m = new Membre(((TextView)findViewById(R.id.nomInscrire)).getText().toString()
+                            ,((TextView) findViewById(R.id.prenomInscrire)).getText().toString()
+                            ,formatter.parse(((TextView)findViewById(R.id.ddnInscrire)).getText().toString())
+                            ,((TextView) findViewById(R.id.mailInscrire)).getText().toString()
+                            ,((TextView) findViewById(R.id.loginInscrire)).getText().toString()
+                            ,((TextView) findViewById(R.id.passwordUnInscrire)).getText().toString());
                     Log.d("Recup membre",m.toString());
                     DaoMembre.getInstance().addMembre(m, new DelegateAsyncTask() {
                         @Override
                         public void whenWSConnexionIsTerminated(Object result) {
+                            if((boolean)result){
+                                Log.d("valide inscri","oui");
+                                Toast.makeText(Incription.this, "compte créé, activez le par mail",Toast.LENGTH_LONG).show();
+                                setResult(2,new Intent().putExtra("login",((TextView) findViewById(R.id.loginInscrire)).getText().toString())
+                                        .putExtra("mdp",((TextView) findViewById(R.id.passwordUnInscrire)).getText().toString()));
+                                finish();
+                            }else{
+                                Toast.makeText(Incription.this, "erreur",Toast.LENGTH_LONG).show();
 
+                            }
                         }
                     });
                 } catch (ParseException e) {

@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
         ((Button) findViewById(R.id.buttonInscrire)).setOnClickListener((View view) -> {
             Intent intent = new Intent(this, Incription.class);
-            startActivity(intent);
+            startActivityForResult(intent,2);
         });
 
         ((Button) findViewById(R.id.buttonIdentifierAccueil)).setOnClickListener((View view) -> {
@@ -54,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK){
             ((TextView) findViewById(R.id.loginAccueil)).setText("");
             ((TextView) findViewById(R.id.passwordAccueil)).setText("");
+        }else if(requestCode==resultCode){
+            ((TextView) findViewById(R.id.loginAccueil)).setText(data.getStringExtra("login"));
+            ((TextView) findViewById(R.id.passwordAccueil)).setText(data.getStringExtra("mdp"));
         }
     }
 }
