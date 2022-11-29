@@ -69,6 +69,7 @@ public class ListeSoirees extends AppCompatActivity {
                 public void whenWSConnexionIsTerminated(Object result) {
                     if ((boolean) result == true) {
                         Toast.makeText(ListeSoirees.this, "Supression du compte en cours...", Toast.LENGTH_LONG).show();
+                        setResult(RESULT_OK);
                         finish();
                     } else {
                         Toast.makeText(ListeSoirees.this, "Supression du compte impossible...", Toast.LENGTH_LONG).show();
