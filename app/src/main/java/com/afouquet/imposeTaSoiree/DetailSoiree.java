@@ -2,6 +2,7 @@ package com.afouquet.imposeTaSoiree;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -152,6 +153,13 @@ public class DetailSoiree extends AppCompatActivity {
                     }
                 });
             }
+        });
+
+        findViewById(R.id.buttonLocaliserDetail).setOnClickListener((View view)->{
+            Intent leIntent = new Intent(DetailSoiree.this,LocalisationSoiree.class);
+            leIntent.putExtra("soiree",s);
+            Log.d("verif detail",s.toString());
+            startActivity(leIntent);
         });
 
     }

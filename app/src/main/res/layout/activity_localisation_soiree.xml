@@ -7,10 +7,10 @@
     <org.osmdroid.views.MapView
         android:id="@+id/mapLocaliser"
         android:layout_width="fill_parent"
-        android:layout_height="568dp" />
+        android:layout_height="514dp" />
 
     <Button
-        android:id="@+id/buttonRetourMap"
+        android:id="@+id/buttonRetourLocalisation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Retour" />

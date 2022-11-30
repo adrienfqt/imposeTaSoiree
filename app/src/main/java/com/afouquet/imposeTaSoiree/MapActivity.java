@@ -33,7 +33,7 @@ public class MapActivity extends AppCompatActivity {
             setContentView(R.layout.activity_map);
             Context ctx = getApplicationContext();
             Configuration.getInstance().load(ctx, PreferenceManager.getDefaultSharedPreferences(ctx));
-            map = (MapView) findViewById(R.id.map);
+            map = (MapView) findViewById(R.id.mapLocaliser);
             map.setTileSource(TileSourceFactory.MAPNIK);
             String[] tabPerm = new String[1];
             tabPerm[0] = Manifest.permission.WRITE_EXTERNAL_STORAGE;
