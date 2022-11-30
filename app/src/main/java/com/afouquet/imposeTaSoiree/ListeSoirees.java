@@ -94,6 +94,11 @@ public class ListeSoirees extends AppCompatActivity {
                 startActivityForResult(leIntent,1);
             }
         });
+        findViewById(R.id.buttonCarteSoirees).setOnClickListener((View views)->{
+            Intent leIntent = new Intent(ListeSoirees.this,MapActivity.class);
+            startActivityForResult(leIntent,3);
+        });
+
     }
 
     @Override
