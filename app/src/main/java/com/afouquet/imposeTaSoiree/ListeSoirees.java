@@ -79,6 +79,12 @@ public class ListeSoirees extends AppCompatActivity {
 
         });
 
+        findViewById(R.id.buttonAddSoiree).setOnClickListener((View views)->{
+            Intent leIntent = new Intent(ListeSoirees.this,AjoutSoiree.class);
+            startActivityForResult(leIntent,3);
+        });
+
+
         ((ListView) findViewById(R.id.listSoirees)).setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

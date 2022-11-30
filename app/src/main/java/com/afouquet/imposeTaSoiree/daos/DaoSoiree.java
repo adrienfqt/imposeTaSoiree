@@ -81,4 +81,25 @@ public class DaoSoiree {
             e.printStackTrace();
         }
     }
+
+    public void addSoiree(String lib,String desc,String date,String heure, String adresse,DelegateAsyncTask delegate) {
+        String url = "requete=addSoiree&libelleCourt="+lib+"&descriptif="+desc+"&dateDebut="+date
+                +"&heureDebut="+heure+"&adresse="+adresse;
+        WSConnexionHTTPS wsConnexionHTTPS = new WSConnexionHTTPS() {
+            @Override
+            protected void onPostExecute(String s) {
+                traiterRetouraddSoiree(s, delegate);
+            }
+        };
+        wsConnexionHTTPS.execute(url);
+    }
+
+     private void traiterRetouraddSoiree(String s, DelegateAsyncTask delegate){
+         try {
+             JSONObject jo = new JSONObject(s);
+             delegate.whenWSConnexionIsTerminated(jo.getBoolean("response"));
+         } catch (JSONException e) {
+             e.printStackTrace();
+         }
+     }
 }
