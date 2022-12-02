@@ -7,11 +7,17 @@
     <org.osmdroid.views.MapView
         android:id="@+id/mapLocaliser"
         android:layout_width="fill_parent"
-        android:layout_height="514dp" />
+        android:layout_height="419dp" />
 
     <Button
         android:id="@+id/buttonRetourLocalisation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Retour" />
+
+    <Button
+        android:id="@+id/buttonItineraireSoiree"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Itinéraire" />
 </LinearLayout>

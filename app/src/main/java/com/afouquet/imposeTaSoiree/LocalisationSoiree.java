@@ -6,7 +6,9 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -49,6 +51,13 @@ public class LocalisationSoiree extends AppCompatActivity {
         positionnerSurCentre(p);
         findViewById(R.id.buttonRetourLocalisation).setOnClickListener((View view) -> {
             finish();
+        });
+
+        findViewById(R.id.buttonItineraireSoiree).setOnClickListener((View view)->{
+            String uri = "http://maps.google.com/maps?&daddr=" + s.getLat() + "," + s.getLng();
+            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
+            intent.setPackage("com.google.android.apps.maps");
+            startActivity(intent);
         });
     }
 
