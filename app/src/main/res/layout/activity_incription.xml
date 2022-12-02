@@ -8,7 +8,7 @@
 
     <EditText
         android:id="@+id/loginInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="16dp"
         android:ems="10"
@@ -21,7 +21,7 @@
 
     <EditText
         android:id="@+id/passwordUnInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -34,7 +34,7 @@
 
     <EditText
         android:id="@+id/passwordDeuxInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -47,7 +47,7 @@
 
     <EditText
         android:id="@+id/nomInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -60,7 +60,7 @@
 
     <EditText
         android:id="@+id/prenomInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -73,7 +73,7 @@
 
     <EditText
         android:id="@+id/ddnInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:ems="10"
@@ -86,7 +86,7 @@
 
     <EditText
         android:id="@+id/mailInscrire"
-        android:layout_width="391dp"
+        android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginTop="10dp"
         android:ems="10"
