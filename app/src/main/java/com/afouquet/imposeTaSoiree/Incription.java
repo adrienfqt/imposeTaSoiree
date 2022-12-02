@@ -62,7 +62,7 @@ public class Incription extends AppCompatActivity {
                 }
 
             }else{
-                Toast.makeText(this,"password 1 et 2 inégaux",Toast.LENGTH_LONG).show();
+                Toast.makeText(this,"password 1 et 2 inégaux. Rentrez le même dans les 2 champs.",Toast.LENGTH_LONG).show();
             }
 
         });

@@ -66,7 +66,7 @@ public class DaoMembre {
     private void traiterRetourAddMembre(String s, DelegateAsyncTask delegate) {
         try {
             JSONObject jo = new JSONObject(s);
-            delegate.whenWSConnexionIsTerminated(jo.getBoolean("response")==true);
+            delegate.whenWSConnexionIsTerminated(jo.getBoolean("success"));
 
         } catch (JSONException e) {
             e.printStackTrace();

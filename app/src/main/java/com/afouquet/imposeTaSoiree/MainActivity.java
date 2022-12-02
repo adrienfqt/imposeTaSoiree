@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
                         Intent leIntent = new Intent(MainActivity.this, ListeSoirees.class);
                         startActivityForResult(leIntent,1);
                     }else{
-                        Toast.makeText(MainActivity.this,"Identification échouée ",Toast.LENGTH_LONG).show();
+                        Toast.makeText(MainActivity.this,"Identification échouée. Erreur identifiant/mdp ",Toast.LENGTH_LONG).show();
                     }
 
                 }
